@@ -32,7 +32,7 @@ module tb_exit_parking_lot();
 				
 				initial
 					begin
-					park_number <= 3'b000;
+					park_number <= 3'bxxx;
 					#20;
 					park_number <= 3'b001;
 					#20;
