@@ -23,25 +23,20 @@ module decrypt(
  token,
  pattern,
  park_number);
-		input exit;
-		input [2:0] token;
-		input [2:0] pattern;
-		output [2:0] park_number;
-		
-		wire[2:0] e0,e1,e2;
-		assign 
-			e0[0] = token[0] ^ pattern[0],
-			e0[1] = token[1] ^ pattern[1],
-			e0[2] = token[2] ^ pattern[2],
-			e1[0] = e0[0] & exit ,
-			e1[1] = e0[1] & exit ,
-			e1[2] = e0[2] & exit ,
-			e2[0] = ~(exit | (1'dx)),
-			e2[1] = ~(exit | (1'dx)),
-			e2[2] = ~(exit | (1'dx)),
-			park_number[0] = e1[0] | e2[0],
-			park_number[1] = e1[1] | e2[1],
-			park_number[2] = e1[2] | e2[2];
-		
+input exit;
+input [2:0] token;
+input [2:0] pattern;
+output reg [2:0] park_number;
+
+		always @(exit or token or pattern)begin
+			if(exit)begin
+				park_number[0] = token[0] ^ pattern[0];
+				park_number[1] = token[1] ^ pattern[1];
+				park_number[2] = token[2] ^ pattern[2];
+			end
+			else begin
+				park_number = 3'bxxx;
+			end
+		end
  // write your code here, please.
 endmodule
